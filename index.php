@@ -25,6 +25,9 @@ function initApplication(){
         case 'listLA':
             listLeaveApplication();
             break;
+        case 'editLeaveApp':
+            editLeaveApp();
+            break;
         default:
             listLeaveApplication();
     }
@@ -57,5 +60,27 @@ function logout() {
 }
 
 function listLeaveApplication(){
+    $results = array();
+    $data = LeaveApplication::getList();
+    $results['leaveApps'] = $data['results'];
+
+    if (isset($_GET['error'])) { // вывод сообщения об ошибке (если есть)
+        if ($_GET['error'] == "leaveAppNotFound")
+            $results['errorMessage'] = "Ошибка: Заявка не найдена.";
+    }
+
+    if (isset($_GET['status'])) { // вывод сообщения (если есть)
+        if ($_GET['status'] == "changesSaved") {
+            $results['statusMessage'] = "Изменения сохранены.";
+        }
+        if ($_GET['status'] == "articleDeleted") {
+            $results['statusMessage'] = "Заявка удалена.";
+        }
+    }
+
     require(TEMPLATE_PATH. "/viewLeaveApplication.php");
+}
+
+function editLeaveApp(){
+    require(TEMPLATE_PATH."/editLeaveApp.php");
 }

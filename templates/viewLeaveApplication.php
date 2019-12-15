@@ -3,6 +3,15 @@
     <link href="../includes/styles/styleListLA/la_style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
+<?php if ( isset( $results['errorMessage'] ) ) { ?>
+    <div class="errorMessage"><?php echo $results['errorMessage'] ?></div>
+<?php } ?>
+
+
+<?php if ( isset( $results['statusMessage'] ) ) { ?>
+    <div class="statusMessage"><?php echo $results['statusMessage'] ?></div>
+<?php } ?>
+
 <table border="0" cellpadding="0" cellspacing="0" class="tbl1" width="800">
     <tr>
         <td colspan="4"></td>
@@ -22,6 +31,7 @@
                     <td width="8%" valign="top"><img src="../includes/styles/styleListLA/single_pixel.gif" width="140" height="1"><br>
                         <p>Меню<br>
                             <a  class="menu" href="../index.php?action=listLA">К списку</a><br>
+                            <a  class="menu" href="../index.php?action=newLA">Новая заявка</a><br>
                             <a  class="menu" href="../index.php?action=logout">Выйти</a> </p>
                     </td>
                     <td align="center" width="92%">
@@ -33,20 +43,17 @@
                                 <th class="th">Конец отпуска</th>
                                 <th class="th">Описание</th>
                             </tr>
-                            <tr class="tr">
-                                <td class="td">Microsoft</td>
-                                <td class="td">20.3</td>
-                                <td class="td">30.5</td>
-                                <td class="td">23.5</td>
-                                <td class="td">40.3</td>
+                            <?php foreach ( $results['leaveApps'] as $leaveApp ) { ?>
+                            <tr class="tr" <?php if($leaveApp->userid == (int)$_SESSION['user']->id || $_SESSION['user']->rules == "1"){
+                                echo "onclick=\"location='index.php?action=editLeaveApp&amp;leaveAppId={$leaveApp->id}'\"";
+                            }?>>
+                                <td class="td"><?php echo ($leaveApp->id);?></td>
+                                <td class="td"><?php echo ($leaveApp->userdescr);?></td>
+                                <td class="td"><?php echo date('j M Y', $leaveApp->datebeg);?></td>
+                                <td class="td"><?php echo date('j M Y', $leaveApp->dateend);?></td>
+                                <td class="td"><?php echo ($leaveApp->descr);?></td>
                             </tr>
-                            <tr class="tr">
-                                <td class="td">Google</td>
-                                <td class="td">50.2</td>
-                                <td class="td">40.63</td>
-                                <td class="td">45.23</td>
-                                <td class="td">39.3</td>
-                            </tr>
+                            <?php } ?>
                         </table>
                     </td>
                 </tr>
