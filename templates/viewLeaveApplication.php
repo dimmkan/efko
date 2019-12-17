@@ -3,14 +3,7 @@
     <link href="../includes/styles/styleListLA/la_style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-<?php if ( isset( $results['errorMessage'] ) ) { ?>
-    <div class="errorMessage"><?php echo $results['errorMessage'] ?></div>
-<?php } ?>
 
-
-<?php if ( isset( $results['statusMessage'] ) ) { ?>
-    <div class="statusMessage"><?php echo $results['statusMessage'] ?></div>
-<?php } ?>
 
 <table border="0" cellpadding="0" cellspacing="0" class="tbl1" width="800">
     <tr>
@@ -31,11 +24,19 @@
                     <td width="8%" valign="top"><img src="../includes/styles/styleListLA/single_pixel.gif" width="140" height="1"><br>
                         <p>Меню<br>
                             <a  class="menu" href="../index.php?action=listLA">К списку</a><br>
-                            <a  class="menu" href="../index.php?action=newLA">Новая заявка</a><br>
+                            <?php if(!$_SESSION['user']->rules) {?>
+                            <a  class="menu" href="../index.php?action=newLeaveApp">Новая заявка</a><br>
+                            <?php }?>
                             <a  class="menu" href="../index.php?action=logout">Выйти</a> </p>
                     </td>
                     <td align="center" width="92%">
                         <table class="table">
+                            <?php if ( isset( $results['errorMessage'] ) ) { ?>
+                                <tr class="tr"> <div class="errorMessage"><?php echo $results['errorMessage'] ?></div> </tr>
+                            <?php } ?>
+                            <?php if ( isset( $results['statusMessage'] ) ) { ?>
+                                <tr class="tr"> <div class="statusMessage"><?php echo $results['statusMessage'] ?></div> </tr>
+                            <?php } ?>
                             <tr class="tr">
                                 <th class="th">Номер заявки</th>
                                 <th class="th">ФИО Сотрудника</th>
